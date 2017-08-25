@@ -176,3 +176,5 @@ The pipeline shall work well in most cases but for sure it needs some improvemen
 * Dynamically calculate the search area for the sliding window to be more robust specially for sharp curves.
 * Try different types of classifiers as I found that such case can be completely handled using Neural Networks like YOLO which needs massive training data but for sure will give much better results
 * It would be interesting to use the information collected about objects and the camera information to calculate the position and speed of the car. For sure this will need fusion between different steps and for that we shall need to build uncertainty for the detections and deal with multiple motion models but this shall be very interesting
+
+It was nice project, but I aim at improving it to track the vehicle position using the camera. 
