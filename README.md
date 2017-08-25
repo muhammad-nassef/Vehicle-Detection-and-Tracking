@@ -1,9 +1,5 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Vehicle Detection Project**
+# Udacity Self-Driving Car Engineer Nanodegree Program
+## Vehicle Detection Project
 
 The goals / steps of this project are the following:
 
@@ -33,18 +29,18 @@ The goals / steps of this project are the following:
 [video1]: ./project_video_out.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
 The code for this step is contained in the code cells from 1 to 5 of the IPython notebook 
 
@@ -59,7 +55,7 @@ Here is an example using the `gray` color channel and HOG parameters of `orienta
 
 ![alt text][image2]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I tried various combinations of parameters during the lesson and in the project and my choice was based on the best classifier accuracy from the used parameters. Here is the output of the experiments 
 
@@ -73,7 +69,7 @@ I noticed also increasing the pixels per cell could give better accuracy and usi
 
 So I settled on the following parameters 
 `YCrCb`,`orientations=11`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a linear SVM as a first trial because I learned it performs well in this case 
 I performed splitting on the training data to extract testing data for cross_validation using `train_test_split()` function from sklearn
@@ -84,9 +80,9 @@ Then I applied testing for the output model to predict 20 samples of the test_se
 Finally I calculated the accuracy using `score()` function
 
 ###### Note: This part is implemented in the code cell number 8 under the name of "Train the classifier"
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search the bottom half of the image with a scale of 1.5 (default search window is 64x64) and 75% overlapping which was suitable for the image I was testing on this case. I used for that the function `find_cars()` which can extract the hog features from the image and run the sliding window technique then where ever the classifier returns a positive detection the position of the window in which the detection was made will be saved 
 
@@ -96,7 +92,7 @@ Here is an output of the implementation
 
 It performs well although there are one false positive and multiple detections on the two cars. and that what shall be fixed afterwards
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on four scales using YCrCb 3-channel HOG features which provided a nice result.  
 I also applied an optimization for searching. As long as the car gets further from the car the search width decreases. Here are 4 images for the 4 scales I used for searching :
@@ -110,7 +106,7 @@ I also applied an optimization for searching. As long as the car gets further fr
 
 ###### Note: The implementation of this part could be found from code cell 9 to 16
 
-####3. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 3. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 ##### To be able to handle the multiple detections and false positives I needed to apply the heat map technique then apply a threshold below it I reject the detection.
 the implementation of this part can be found under the name `Heatmap`
@@ -146,7 +142,7 @@ looks good. Next step is to try it on the video
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
 I tried first to run the pipeline on the test video, the result was not bad but It was noisy and unstable. and here's a [link to the first video trial](./test_video_out.mp4)
 
@@ -163,9 +159,9 @@ Here's a [link to my final video result](./project_video_out.mp4)
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
@@ -176,5 +172,3 @@ The pipeline shall work well in most cases but for sure it needs some improvemen
 * Dynamically calculate the search area for the sliding window to be more robust specially for sharp curves.
 * Try different types of classifiers as I found that such case can be completely handled using Neural Networks like YOLO which needs massive training data but for sure will give much better results
 * It would be interesting to use the information collected about objects and the camera information to calculate the position and speed of the car. For sure this will need fusion between different steps and for that we shall need to build uncertainty for the detections and deal with multiple motion models but this shall be very interesting
-
-It was nice project, but I aim at improving it to track the vehicle position using the camera. 
